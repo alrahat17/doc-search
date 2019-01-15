@@ -43,7 +43,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{URL::to('doc_back/imgs/avatar-1.png')}}" class="avatar avatar-sm" alt="logo">
-                    <span class="small ml-1 d-md-down-none">John Smith</span>
+                    <span class="small ml-1 d-md-down-none">{{Auth::user()->first_name}}</span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
@@ -67,7 +67,7 @@
                         <i class="fa fa-wrench"></i> Settings
                     </a>
 
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('logout') }}" class="dropdown-item">
                         <i class="fa fa-lock"></i> Logout
                     </a>
                 </div>
@@ -119,56 +119,41 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-energy"></i> UI Kits <i class="fa fa-caret-left"></i>
+                    <li class="nav-item">
+                        <a href="{{URL::to('all_patient')}}" class="nav-link">
+                            <i class="icon icon-umbrella"></i> Patients
                         </a>
-
-                        <ul class="nav-dropdown-items">
-                            <li class="nav-item">
-                                <a href="alerts.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Alerts
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="buttons.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Buttons
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="cards.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Cards
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="modals.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Modals
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="tabs.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Tabs
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="progress-bars.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Progress Bars
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="widgets.html" class="nav-link">
-                                    <i class="icon icon-energy"></i> Widgets
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{URL::to('all_doctor')}}" class="nav-link">
+                            <i class="icon icon-heart"></i> Doctors
+                        </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{URL::to('all_appointment')}}" class="nav-link">
+                            <i class="icon icon-calendar"></i> Appointments
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{URL::to('specialties')}}" class="nav-link">
+                            <i class="fa fa-bullhorn"></i> Specialties
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{URL::to('categories')}}" class="nav-link">
+                            <i class="icon icon-puzzle"></i> Categories
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{URL::to('countries')}}" class="nav-link">
+                            <i class="icon icon-globe"></i> Countries
+                        </a>
+                    </li>
+
+
+                    
                     <li class="nav-item nav-dropdown">
                         <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-graph"></i> Charts <i class="fa fa-caret-left"></i>

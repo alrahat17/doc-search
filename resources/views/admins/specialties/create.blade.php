@@ -5,16 +5,16 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header bg-light">
-					Add Category
+					Add Specialty
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-8 offset-1">
-							<form action="/specialties" method="post" enctype="multipart/form-data">
+							<form action="{{URL::to('/specialties')}}" method="post" enctype="multipart/form-data">
 								{{csrf_field()}}
 								<div class="form-group">
 									<label for="title" class="form-control-label"> Specialty Name</label>
-									<input type="text" id="spcl_name" name="spcl_name" class="form-control" placeholder="Enter the title">
+									<input type="text" id="spcl_name" name="spcl_name" class="form-control">
 								</div>
 
 								<div class="form-group">

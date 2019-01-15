@@ -40,7 +40,14 @@ class SpecialtyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $this->validate($request,[
+
+        'spcl_name'=>'required|string|max:255',
+        'spcl_des'=>'required|max:1000',
+        'category_id' => 'required',
+        ]);
+        
         $specialty = new Specialty;
         $specialty->spcl_name = $request->spcl_name;
         $specialty->spcl_des = $request->spcl_des;
@@ -67,8 +74,10 @@ class SpecialtyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $categories = Category::all();
+        $specialty = Specialty::find($id);
+        return view('admins.specialties.edit')->with('specialty',$specialty)->with('categories',$categories);
     }
 
     /**
@@ -80,7 +89,12 @@ class SpecialtyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $specialty = Specialty::find($id);
+        $specialty->spcl_name = $request->spcl_name;
+        $specialty->spcl_des = $request->spcl_des;
+        $specialty->category_id = $request->category_id;
+        $specialty->update();
+        return redirect('/specialties');
     }
 
     /**
@@ -92,5 +106,23 @@ class SpecialtyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function active_specialty(Request $request,$id){
+
+        $specialty = Specialty::find($id);
+        $specialty->where('id',$id)->update(['status'=>1]);
+        return redirect('specialties');
+
+
+    }
+
+     public function deactive_category(Request $request,$id){
+
+        $specialty = Specialty::find($id);
+        $specialty->where('id',$id)->update(['status'=>0]);
+        return redirect('specialties');
+
+
     }
 }

@@ -7,7 +7,7 @@ use App\Patient;
 
 class Country extends Model
 {
-    public function patient(){
-    	return $this->hasMany('App\Patient');
+    public function user(){
+    	return $this->hasMany('App\User');
     }
 }

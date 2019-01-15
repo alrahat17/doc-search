@@ -1,13 +1,13 @@
 <?php
 
 namespace App;
-use App\Campaign;
+use App\Specialty;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-     public function campaign(){
-    	return $this->hasMany('App\Campaign');
+     public function specialty(){
+    	return $this->hasMany('App\Specialty');
     }
 }

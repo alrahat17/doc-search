@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Appointment;
+use App\Specialty;
+use App\City;
+use App\Docimage;
 
 class User extends Authenticatable
 {
@@ -16,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name','last_name', 'email','user_type','specialty_id','phone_no','password',
     ];
 
     /**
@@ -27,4 +31,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function country(){
+        return $this->belongsTo('App\Country');
+    }
+     public function appointment(){
+        return $this->hasMany('App\Appointment');
+    }
+
+     public function specialty(){
+        return $this->belongsTo('App\Specialty');
+     }
+
+    public function city(){
+        return $this->belongsTo('App\City');
+    }
+
+    public function docimage(){
+        return $this->hasMany('App\Docimage');
+    }
 }

@@ -59,8 +59,9 @@ class CountryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $country = Country::find($id);
+        return view('admins.countries.edit')->with('country',$country);
     }
 
     /**
@@ -72,7 +73,10 @@ class CountryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $country = Country::find($id);
+        $country->country_name = $request->country_name;
+        $country->update();
+        return redirect('/countries');
     }
 
     /**
@@ -84,5 +88,23 @@ class CountryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function active_country(Request $request,$id){
+
+        $country = Country::find($id);
+        $country->where('id',$id)->update(['status'=>1]);
+        return redirect('countries');
+
+
+    }
+
+     public function deactive_country(Request $request,$id){
+
+        $country = Country::find($id);
+        $country->where('id',$id)->update(['status'=>0]);
+        return redirect('countries');
+
+
     }
 }
