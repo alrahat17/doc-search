@@ -151,6 +151,11 @@
                             <i class="icon icon-globe"></i> Countries
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{URL::to('all_city')}}" class="nav-link">
+                            <i class="icon icon-map"></i> Cities
+                        </a>
+                    </li>
 
 
                     

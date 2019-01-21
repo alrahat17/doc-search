@@ -1,5 +1,5 @@
-@extends('layouts.logged_in_patient_layout')
-@section('patient_content')
+@extends('layouts.front_layout')
+@section('front_content')
      <!-- =======ss body========= -->
         <div class="main_area">
             <div class="container">

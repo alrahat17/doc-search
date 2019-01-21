@@ -11,9 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/','HomeController@show_welcome_page');
+Route::post('/fetch','HomeController@fetch')->name('fetch');
+Route::post('logincheck', 'PatientController@logincheck')->name('logincheck');
+Route::get('/show_appointment','HomeController@show_appointment');
+
+//
+
+Route::post('save_appointment','DoctorController@save_appointment');
+ 
+
+ Route::post('/addcomment', 'DoctorController@addData');
+
+
+
+
 
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
@@ -32,6 +47,14 @@ Route::get('/deactive_category/{id}','CategoryController@deactive_category');
 Route::resource('countries','CountryController');
 Route::get('/active_country/{id}','CountryController@active_country');
 Route::get('/deactive_country/{id}','CountryController@deactive_country');
+
+Route::get('/add_city','CountryController@add_city');
+Route::post('/save_city','CountryController@save_city');
+Route::get('/all_city','CountryController@all_city');
+Route::get('/active_city/{id}','CountryController@active_city');
+Route::get('/deactive_city/{id}','CountryController@deactive_city');
+Route::get('/edit_city/{id}/edit','CountryController@edit_city');
+Route::post('/update_city/{id}','CountryController@update_city')->name('update_city');
 
 
 Route::get('add_patient','AdminController@add_patient')->name('add_patient');
@@ -55,36 +78,6 @@ Route::get('all_appointment','AdminController@all_appointment')->name('appointme
 Route::get('appointments','AdminController@getAppointments')->name('get.appointments');
 
 
-
-Route::get('add_appointment','AdminController@add_appointment')->name('add_appointment');
-
-});
-
-//Route::get('doctor_schedule/{id}','DoctorController@show_schedule_page');
-
-//Route::post('doctor_schedule','DoctorController@doctor_schedule_update');
-Route::get('create_appointment','DoctorController@create_appointment');
-
-Auth::routes();
-Route::get('logout', 'Auth\LoginController@logout');
-
-Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function()
-{
-Route::resource('patients','PatientController');
-Route::post('/update_profile/{id}','PatientController@update_profile')->name('update_patient_profile');
-Route::get('/patients_messages','PatientController@show_patients_message');
-});
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-//Mahmud
-
-
-
-/*Register Doctor Template*/
-
-
-
 /* Add Doctors */
 
 Route::get('adddoctor','AdminController@adddoctor')->name('adddoctor');
@@ -96,27 +89,78 @@ Route::get('all_doctor','AdminController@all_doctor')->name('doctors');
 Route::get('doctors','AdminController@getDoctors')->name('get.doctors');
 
 Route::get('/edit_doctor/{id}','AdminController@edit_doctor');
-Route::post('/update_doctor/{id}','AdminController@update_doctor')->name('update_doctor');
+Route::post('/doctor_update/{id}','AdminController@doctor_update')->name('doctor_update');
 Route::get('/delete_doctor/{id}','AdminController@delete_doctor')->name('delete_doctor');
+
+
+
+
+Route::get('add_appointment','AdminController@add_appointment')->name('add_appointment');
+
+});
+
+//Route::get('doctor_schedule/{id}','DoctorController@show_schedule_page');
+
+//Route::post('doctor_schedule','DoctorController@doctor_schedule_update');
+
+Auth::routes();
+Route::get('logout', 'Auth\LoginController@logout');
+
+Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function()
+{
+Route::resource('patients','PatientController');
+//Added
+Route::post('/patients/create', 'PatientController@check')->name('email_available.check');
+
+//Added
+Route::post('/update_profile/{id}','PatientController@update_profile')->name('update_patient_profile');
+Route::get('/patients_messages','PatientController@show_patients_message');
+});
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+//Mahmud
+
+
+
+/*Register Doctor Template*/
+
+
+
 
 Route::group(['middleware' => 'App\Http\Middleware\DoctorMiddleware'], function()
 {
 
 /* Doctor Update Section*/
 
-Route::resource('doctor','DoctorController');
-
+Route::resource('doctor','DoctorController');//Rahat
+//Rahat
 Route::get('/doctor_profile','DoctorController@doctorProfile')->name('doctorProfile');
+Route::get('/doctor_dashboard','DoctorController@show_doc_dashboard');
 
-Route::post('/doctor_update/{id}','DoctorController@doctor_update');
+
+//Route::post('/doctor_update/{id}','DoctorController@doctor_update');
+Route::post('/update_doctor/{id}','DoctorController@update_doctor')->name('update_doctor');
+
+
 Route::get('doctor_schedule','DoctorController@show_schedule_page');
 Route::post('doctor_schedule/{id}','DoctorController@doctor_schedule_update');
+Route::get('create_appointment','DoctorController@create_appointment');
+
 
 });
 
 //Rahat
 Route::post('doctor_list','HomeController@show_doctor_list');
+//Route::get('doctor_details/{id}','HomeController@doctor_details')->name('doctor_details');
 //Rahat
+
+Route::get('doctor_view/{id}','HomeController@doctor_view')->name('doctor_view');
+
+
 
 
 
@@ -131,3 +175,13 @@ Route::post('docpractice', 'DoctorController@docpractice')->name('docpractice');
 /*Image Upload */
 Route::post('docimageupdate/{id}','DoctorController@docimageupdate')->name('docimageupdate');
 Route::post('docimagedelete/{id}','DoctorController@docimagedelete')->name('docimagedelete');
+
+/*Doctor Prising*/
+
+// Route::post('/procedure','DoctorController@procedure')->name('procedure');
+Route::post('/doctorprising','DoctorController@procedure')->name('procedure');
+
+/*estabAffliation*/
+
+Route::post('est_affliation','DoctorController@est_affliation')->name('est_affliation');
+Route::get('delete_affliation/{id}','DoctorController@delete_affliation')->name('delete_affliation');

@@ -2,11 +2,19 @@
 @section('admin_content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> -->
+<style type="text/css">
+.btn.btn-danger {
+    float: left;
+}
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-light">
                 Doctors Table
+                <a class="create_category" href="{{URL::to('adddoctor')}}">
+                <button class="btn btn-primary float-right">Add Doctor</button>
+                </a>
             </div>
             <div class="card-body">
                 <table id="doctor_table" class="table table-responsive table-bordered data-table dataTable">

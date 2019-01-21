@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 use yajra\Datatables\Datatables;
 use App\HTTP\Requests;
 use App\Doctor;
+use App\Docimage;
 
 class AdminController extends Controller
 {
@@ -143,8 +144,15 @@ class AdminController extends Controller
     public function edit_patient($id){
 
     $user = User::find($id);
+    if($user){
     $countries = Country::all();
     return view('admins.patients.edit')->with('user',$user)->with('countries',$countries);
+
+    }else
+    {
+        return abort(404);
+    }
+    
 
     }
 
@@ -323,7 +331,43 @@ class AdminController extends Controller
        $doctor->phone_portable = $request->phone_portable;
        $doctor->status = $request->status;
        $doctor->user_type = $request->user_type;
+
        $doctor->save();
+
+        $image = 'doc_img/default.png';
+
+      //Image Upload for doctor
+      for($i = 0; $i < 5; $i++)
+      {
+           $doctor_image = new Docimage();
+
+           $is_main_img = 0;
+           if($i == 0){
+               $is_main_img = 1;
+           }
+
+           $doctor_image->user_id = $doctor->id;
+           $doctor_image->image = $image;
+           $doctor_image->is_main_img = $is_main_img;
+           
+           $doctor_image->save();
+           //echo $i;
+           //echo '<pre>';print_r($doctor_image);
+      }
+
+      for ($i=0; $i<7 ; $i++) { 
+        $data=[
+
+        'doctor_id' => $doctor->id,
+        'day_id' => $i,
+        'start' => '00:00:00',
+        'end' => '00:00:00',
+        'duration'=>15,
+        ];
+        DB::table('schedules')->insert($data);
+     }
+      
+      
        return redirect('/all_doctor');
     }
 
@@ -405,12 +449,19 @@ class AdminController extends Controller
     {
         $citys = City::all();
         $specialtys = Specialty::all();
-        $user = User::find($id);
 
-        return view ('admins.doctor.edit', compact('citys','specialtys','user'));
+        $user = User::find($id);
+        if($user){
+         return view ('admins.doctor.edit', compact('citys','specialtys','user'));   
+        }
+        else{
+         return abort(404);
+        }
+
+        
     }
 
-    public function update_doctor(Request $request, $id){
+    public function doctor_update(Request $request, $id){
 
        $doctor = User::find($id);
        $doctor->title = $request->title;

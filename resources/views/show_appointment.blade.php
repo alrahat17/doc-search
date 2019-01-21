@@ -8,11 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" >
     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" >
+    
+   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /> 
     <link rel="stylesheet" type="text/css" href="assets/css/slick.css"/>
     <link rel="stylesheet" type="text/css" href="assets/css/intlTelInput.min.css"/>
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="{{asset('doc_front/assets/css/style.css')}}" rel="stylesheet">
     <title>.:: Doctors and Online Appointment - DabaDoc ::.</title>
   </head>
   <body>
@@ -27,20 +31,36 @@
                         </button>
                          
                         <div class="navbar-collapse collapse justify-content-end" id="navbarSupportedContent">
-                          <ul class="navbar-nav ">
-                            <li class="nav-item">
-                              <a class="nav-link " href="patients_dashboard.html">My appointments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="patients_messages.html" >Messages</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="patients_profile.html">My profile</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link " href="index.html">Sign Out</a>
-                            </li> 
-                          </ul>
+                                <ul class="navbar-nav ">
+                                        <li class="nav-item">
+                                          <a class="nav-link " href="doctor_dashboard.html">Account</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="calendar.html" >Diary</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="doctor_message.html">Messages</a>
+                                        </li>
+                                        
+                                        <form class="form-inline my-2 my-lg-0 inline-search">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                                <button class="btn  my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </form>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-user"></i>  Profile
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item "> Dr. Floor Ssssssss</a>
+                                                <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item " href="#"> <i class="fa fa-user"></i> See my profile</a>
+                                                <a class="dropdown-item" href="doctor_profile_edit.html"><i class="fa fa-pencil"> </i> Edit my profile</a> 
+                                                <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out"></i> Sign Out</a>
+                                            </div>
+                                        </li> 
+                                      </ul>
+                                       
                            
                         </div>
                       </nav>
@@ -48,96 +68,20 @@
             </div>
         </header>
      <!-- =======ss header end========= -->
+    
+
      <!-- =======ss body========= -->
         <div class="main_area">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="ss_heading">
-                            <h3> Edit my <span>profil</span> </h3>  
-                        </div>
-                    </div>
-
                     <div class="col-sm-12" id="ss_registration_content">
                         <div class="ss_registration_content_top">
                              
-                            <div class="registration_form">
+                            <div class="doctor_profile">
                                 <div class="row justify-content-md-center">
-                                    <div class="col-sm-8">
-                                        
-                                            <form>
-                                               
-                                                <div class="row">
-                                                     <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputFirstname">* First name</label>
-                                                            <input type="text" class="form-control" id="exampleInputFirstname" aria-describedby="FirstnameHelp" placeholder="" value="salim">
-                                                        </div>
-                                                     </div>
-                                                     <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputname">* Name</label>
-                                                                <input type="text" class="form-control" value="ahamad" id="exampleInputname" aria-describedby="nameHelp" placeholder="">
-                                                            </div>
-                                                     </div>
-                                               </div>
-                                               <div class="row">
-                                                    
-                                                    <div class="col-sm-6">
-                                                      <div class="form-group">
-                                                        <label for="exampleInputEmail1">* Email</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="salimdesign@sahajjo.com">
-                                                       </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="exampleFormControlSelect2">* Country</label>
-                                                                <select class="form-control">
-                                                                    <option selected>Morocco</option>
-                                                                    <option>Algeria</option>
-                                                                    <option>Tunisia</option>
-                                                                    <option>Senegal</option>
-                                                                    <option>Cameroon</option>
-                                                                    <option>Ivory Coast</option> 
-                                                                </select>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputpassword">* Password</label>
-                                                            <input type="text" value="12345678" class="form-control" id="exampleInputpassword" aria-describedby="passwordHelp" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputpasswordcrf">* Confirmation of password</label>
-                                                            <input type="text" class="form-control"  value="12345678" id="exampleInputpasswordcrf" aria-describedby="passwordcrfHelp" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                      
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="exampleFormControlInput1">* Numéro de Téléphone (cabinet)</label>
-                                                                <input type="tel"  class="form-control" id="phone"  value="12345678" >
-                                                            </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                         
-                                                    </div>
-                                                </div>
-                                                
-                                                  
-                                                    <div class="form-check">
-                                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                      <label class="form-check-label" for="exampleCheck1">* You have read and accepted the <a href="#">terms of use</a> </label>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Valider</button>
-                                                  </form>
-                                    </div>
+                                   <div class="col-sm-12">
+                                    <div id="calendar"></div>
+                                   </div>
                                 </div>
                             </div>
                         </div>
@@ -146,6 +90,8 @@
             </div>
         </div>
      <!-- =======ss body end========= -->
+    
+
      <!-- =======ss footer========= -->
      <div class="footer_top">
       <div class="container">
@@ -304,18 +250,53 @@
     </div>
   </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+    <script src="{{asset('doc_front/assets/js/jquery-3.3.1.min.js')}}" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/14.0.6/js/intlTelInput.min.js"></script>    
+    <script src="{{asset('doc_front/assets/js/jquery-ui.min.js')}}" ></script>
+   
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" ></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript" src="assets/js/slick.min.js"></script>
+  
+   
        <script>
       
     </script>
     <script>
        
        $(document).ready(function() {
+
+         
+         var obj = JSON.parse('<?php echo json_encode($appointments) ?>');
+
+         alert(obj.toSource());
+
+
+        
+        $('#calendar').fullCalendar({
+            header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+      },
+      defaultDate: '2019-02-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [      
+        
+        {
+          title: 'patient_name',
+          start: '2019-02-20',
+        },
+              
+      ]
+ 
+
+          });
         $('.js-example-basic-single').select2();
         $('.js-example-basic-multiple').select2();
   
@@ -416,26 +397,6 @@
                 slidesToShow: 1,
              });
     </script>
-    <script>
-        var input = document.querySelector("#phone");
-        
-        var input2 = document.querySelector("#phone2"); 
-        window.intlTelInput(input,{
-            autoHideDialCode: false, 
-            defaultCountry: "auto",
-            numberType: "MOBILE",
-            separateDialCode:true,
-            autoPlaceholder:"polite",
-            placeholderNumberType:"MOBILE",
-            });
-            window.intlTelInput(input2,{
-            autoHideDialCode: false, 
-            defaultCountry: "auto",
-            numberType: "MOBILE",
-            separateDialCode:true,
-            autoPlaceholder:"polite",
-            placeholderNumberType:"MOBILE",
-            }); 
-    </script>
+     
   </body>
 </html>

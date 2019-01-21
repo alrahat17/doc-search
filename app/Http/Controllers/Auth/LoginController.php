@@ -36,7 +36,7 @@ class LoginController extends Controller
     // Check user role
     switch ($user_type) {
         case 'doctor':
-                return '/doctor_profile';
+                return '/doctor_dashboard';
             break;
         case 'admin':
                 return '/admins';
@@ -47,6 +47,8 @@ class LoginController extends Controller
        
         }
     }
+
+   
 
 
     /**

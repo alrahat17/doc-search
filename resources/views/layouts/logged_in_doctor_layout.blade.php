@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_token" content="{{csrf_token()}}" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" >
@@ -33,7 +34,7 @@
                         <div class="navbar-collapse collapse justify-content-end" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                         <li class="nav-item">
-                                          <a class="nav-link " href="doctor_dashboard.html">Account</a>
+                                          <a class="nav-link " href="{{URL::to('/doctor_dashboard')}}">Account</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#" >Diary</a>
@@ -51,11 +52,11 @@
                                                     <i class="fa fa-user"></i>  Profile
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item "> Dr. {{Auth::user()->first_name}} {{Auth::user()->last_name}}</a>
+                                                <a class="dropdown-item ">{{Auth::user()->title}} {{Auth::user()->first_name}} {{Auth::user()->last_name}}</a>
                                                 <div class="dropdown-divider"></div>
 
-                                                <a class="dropdown-item " href="#"> <i class="fa fa-user"></i> See my profile</a>
-                                                <a class="dropdown-item" href="{{URL::to('/doctor_profile')}}"><i class="fa fa-pencil"> </i> Edit my profile</a> 
+                                                <a class="dropdown-item " href="{{URL::to('/doctor_dashboard')}}"> <i class="fa fa-user"></i> See my profile</a>
+                                                <a class="dropdown-item" href="{{route('doctor.edit',Auth::user()->id)}}"><i class="fa fa-pencil"> </i> Edit my profile</a> 
                                                 <a class="dropdown-item" href="{{URL::to('/logout')}}"><i class="fa fa-sign-out"></i> Sign Out</a>
                                             </div>
                                         </li> 

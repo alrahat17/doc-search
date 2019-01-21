@@ -9,6 +9,9 @@ use Hash;
 use DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Alert;
 
 class PatientController extends Controller
 {
@@ -34,6 +37,52 @@ class PatientController extends Controller
         $countries = Country::all();
         return view('patients.create')->with('countries',$countries);
     }
+
+    public function check(Request $request)
+    {
+     if($request->get('email'))
+     {
+      $email = $request->get('email');
+      $data = DB::table("users")
+       ->where('email', $email)
+       ->count();
+      if($data > 0)
+      {
+       echo 'not_unique';
+      }
+      else
+      {
+       echo 'unique';
+      }
+     }
+    }
+
+    public function logincheck()
+    {
+      echo "ok";die;
+     if($request->get('email'))
+     {
+      $email = $request->get('email');
+      $password = Hash::make($request->password);
+      $data = DB::table("users")
+       ->where('email', $email)
+       ->first();
+
+       $pass = $data->pass;
+
+
+
+      if($pass == $password)
+      {
+       echo 'matched';
+      }
+      else
+      {
+       echo 'not_matched';
+      }
+     }
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -63,6 +112,10 @@ class PatientController extends Controller
         $patient->phone_no = $request->phone_no;
         $patient->password = Hash::make($request->password);
         $patient->save();
+
+        \Mail::to($patient->email)->send(new WelcomeMail);
+
+        
 
         return redirect('/');
     }
@@ -165,7 +218,7 @@ class PatientController extends Controller
 
   public function __construct()
     {
-      $this->middleware('verified',['except' => ['create']]);
+      $this->middleware('auth',['except' => ['create','store','check','logincheck']]);
     }
 
     

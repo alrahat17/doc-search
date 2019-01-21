@@ -192,7 +192,7 @@
 								</div>
 							</div>
 							<div class="col-8">
-								<h3> <a href="#"> Dr. {{$user->first_name}} {{$user->last_name}} </a> </h3> 
+								<h3> <a href="#"> {{$user->title}} {{$user->first_name}} {{$user->last_name}} </a> </h3> 
 								<p> <i class="fa fa-map-marker"></i>
 									<span>{{$user->address}}</span>
 								</p>
@@ -201,12 +201,15 @@
 								<p> <i class="fa fa-phone"></i>
 									<span>{{$user->phone_no}} </span>
 								</p>
+								<p> <i class="fa fa-phone"></i>
+									<span>{{$user->id}} </span>
+								</p>
 								<p> <i class="fa fa-envelope-o"></i>
 									<span>rc@docdirect.com</span>
 								</p> 
 
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, consectetur adipisicing elit, sed do  sed do eiusmod tempor...</p>
-								<a href="#">View profile</a>
+								<a href="{{ route('doctor_view',$user->id) }}">View profile</a>
 							</div>
 						</div>
 					</div>

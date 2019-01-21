@@ -76,9 +76,16 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $category = Category::find($id);
-        return view('admins.categories.edit')->with('category',$category);
+    {   
+         $category = Category::find($id);
+        if($category){
+           return view('admins.categories.edit')->with('category',$category);  
+        }
+        else{
+            return abort(404);
+        }
+       
+       
     }
 
     /**

@@ -5,17 +5,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-light">
-                    Edit Country
+                    Add City
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8 offset-1">
-                            <form action="{{URL::to('/countries',$country->id)}}" method="post" enctype="multipart/form-data">
+                            <form action="{{URL::to('/save_city')}}" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
-                                  {{method_field('PUT')}}
                                 <div class="form-group">
-                                    <label for="title" class="form-control-label"> Country Name</label>
-                                    <input type="text" id="country_name" name="country_name" class="form-control" value="{{$country->country_name}}" >
+                                    <label for="title" class="form-control-label"> City Name</label>
+                                    <input type="text" id="city" name="city" class="form-control" >
                                 </div>
                                 
                                 

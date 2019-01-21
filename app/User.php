@@ -9,6 +9,7 @@ use App\Appointment;
 use App\Specialty;
 use App\City;
 use App\Docimage;
+use App\Image;
 
 class User extends Authenticatable
 {
@@ -49,5 +50,9 @@ class User extends Authenticatable
 
     public function docimage(){
         return $this->hasMany('App\Docimage');
+    }
+
+    public function image(){
+        return $this->hasMany('App\Image');
     }
 }

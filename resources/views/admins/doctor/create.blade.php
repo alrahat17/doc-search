@@ -52,11 +52,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">City</label>
-                                    <select id="city" name="city_id" class="form-control">
+                                    <label for="city_id">City</label>
+                                    <select id="city_id" name="city_id" class="form-control">
                                         <option value="">--Select City--</option>
                                         @foreach($citys as $city)
-                                        <option value="{{ $city->city_id }}">{{ $city->city }}</option>
+                                        <option value="{{ $city->id }}">{{ $city->city }}</option>
                                         @endforeach                    
                                     </select>
                                 </div>

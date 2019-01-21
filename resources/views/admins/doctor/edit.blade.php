@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8 offset-1">
-                            <form action="{{ route('update_doctor', $user->id )}}" method="POST">
+                            <form action="{{ route('doctor_update', $user->id )}}" method="POST">
                                 @csrf                          
                                 <div class="form-group">
                                     <label for="single-select">* Title</label>

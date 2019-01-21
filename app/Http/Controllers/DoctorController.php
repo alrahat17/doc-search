@@ -8,10 +8,14 @@ use App\Specialty;
 use App\Doctor;
 use Hash;
 use App\User;
+use App\Appointment;
 use App\Schedule;
 use Auth;
 use DateTime;
 use DB;
+use App\Docimage;
+use App\DocPrice;
+use App\EstabAffliation;
 
 class DoctorController extends Controller
 {
@@ -24,6 +28,17 @@ class DoctorController extends Controller
     {
         //$doctors  = User::where('user_type','=','doctor')->get();
         //return view('frontend.doctor_profile');
+    }
+
+    public function show_doc_dashboard(){
+
+        if(Auth::check()){
+         return view('frontend.doctor_dashboard');   
+     }else{
+        return redirect ('/login');
+     }
+
+        
     }
 
     /**
@@ -62,6 +77,40 @@ class DoctorController extends Controller
        $doctor->phone_portable = $request->phone_portable;
        $doctor->user_type = $request->user_type;
        $doctor->save();
+
+        $image = 'doc_img/default.png';
+
+      //Image Upload for doctor
+      for($i = 0; $i < 5; $i++)
+      {
+           $doctor_image = new Docimage();
+
+           $is_main_img = 0;
+           if($i == 0){
+               $is_main_img = 1;
+           }
+
+           $doctor_image->user_id = $doctor->id;
+           $doctor_image->image = $image;
+           $doctor_image->is_main_img = $is_main_img;
+           
+           $doctor_image->save();
+           //echo $i;
+           //echo '<pre>';print_r($doctor_image);
+      }
+
+       
+        for ($i=0; $i<7 ; $i++) { 
+        $data=[
+
+        'doctor_id' => $doctor->id,
+        'day_id' => $i,
+        'start' => '00:00:00',
+        'end' => '00:00:00',
+        'duration'=>15,
+        ];
+        DB::table('schedules')->insert($data);
+     }
        return redirect('/');
     }
 
@@ -84,8 +133,21 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        echo $id;
+        $citys = City::all();
+        $specialtys = Specialty::all();
+
+        $user_id = Auth::user()->id;
+        $doctor_galarys = Docimage::where('user_id','=', $user_id)->get();
+
+        $doctor_pricings = DocPrice::where('user_id','=', $user_id)->get();
+
+        $est_afflications = EstabAffliation::where('user_id','=', $user_id)->get();
+
+
+        return view('frontend.doctor_update', compact('citys','specialtys','doctor_galarys','doctor_pricings','est_afflications'));
+        
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -123,18 +185,20 @@ class DoctorController extends Controller
 
     
 
+
     public function show_schedule_page(){
 
     $doctor_id = Auth::user()->id;
     $days = ['Monday','Tuesday','Wednesday','ThursDay','Friday','Saturday','Sunday'];
-    $schedules = Schedule::where('doctor_id',$doctor_id)->orderBy('id','asc')->get();
-
-
-
-
-    return view('frontend.doctor_schedule')->with('days',$days)->with('schedules',$schedules);
-
+    $schedules = Schedule::where('doctor_id',$doctor_id)->orderBy('day_id','asc')->get();
+    //$schedules = Schedule::where('doctor_id',$doctor_id)->get();
+   
+    
+     return view('frontend.doctor_schedule')->with('days',$days)->with('schedules',$schedules);
+   
     }
+
+
 
     public function doctor_schedule_update(Request $request,$id){
         
@@ -149,10 +213,12 @@ class DoctorController extends Controller
         'end' => date("G:i:s",strtotime($request->end[$i])),
         'duration'=>$request->duration,
         ];
+
+       
         DB::table('schedules')->where('doctor_id',$doctor_id)->where("day_id",$i)->update($data);
     }
 
-      return 'Updated';
+      return view('frontend.doctor_dashboard');
 
     }
 
@@ -171,6 +237,7 @@ class DoctorController extends Controller
                     5 => 'Saturday',
                     6 => 'Sunday',
                 );
+       
         
         $new_array = array();
         $i = 0;
@@ -190,9 +257,52 @@ class DoctorController extends Controller
             $i++;
         }
         // echo '<pre>';print_r($new_array);die;
-        
+
+
         
         return view('frontend.create_appointment')->with('schedules',$new_array)->with('days',$days);
+    }
+
+    public function save_appointment(Request $request){
+
+     echo "<pre>";
+     $data = $_POST;
+
+     $doctor_id = Auth::user()->id;
+
+     //$app = new Appointment;
+
+     for($z=0;$z<7;$z++){
+     $app = sizeof($data['start'][$z]);
+      for($i=0;$i<$app;$i++){
+      $x = $data['start'][$z][$i];
+      $x = new DateTime($x);
+      $fx = $x->format('H:i');
+      $y = $data['end'][$z][$i];
+      $y = new DateTime($y);
+      $fy = $y->format('H:i'); 
+      //echo $x; //$z day_id
+
+      $st=[
+        'doctor_id'=> $doctor_id,
+        'day_id'=>$z,
+        'start' => new DateTime($fx),
+        'end'=>new DateTime($fy),
+        ];
+
+        DB::table('appointments')->insert($st);
+        
+     }    
+     }
+      
+
+      echo "<br>";
+
+    
+    return 'Success';
+
+           
+
     }
 
     public function docpractice(Request $request)
@@ -226,7 +336,7 @@ class DoctorController extends Controller
         if (isset($image))
         {
             
-            $imagename =time() .'_'.$cat_img->getClientOriginalName();
+            $imagename =time() .'_'.$image->getClientOriginalName();
             $upload_path='doc_img/';
             $imagename = $upload_path.$imagename;  
             if (!file_exists('doc_img'))
@@ -259,9 +369,53 @@ class DoctorController extends Controller
     //     $this->middleware('auth');
     // }
 
+    public function procedure(Request $request)
+ {  
+     
+    $doc_price = new DocPrice;
+    //$doc_price->id = 3;
+    $doc_price->user_id = Auth::user()->id;
+    $doc_price->procedure_name = $request->procedure_name;
+    $doc_price->fixed_price = $request->fixed_price;
+    $doc_price->variable_price = $request->variable_price;
+    $doc_price->status = $request->status;
+    
+   
+
+    $doc_price->save();
+
+   
+    //echo json_encode($doc_price);
+   
+ }
+
+ public function addData(Request $request)
+   {
+     //print_r($_POST);
+     $email = $request->get('email');
+     //$password = Hash::make($request->password);
+     $password = $request->password;
+     $data = DB::table("users")
+       ->where('email', $email)
+       ->first();
+
+     $pass = $data->password;
+
+     if (Hash::check($password, $pass)) {
+
+        echo 'ok';
+        //echo $pass;
+
+     }
+     else{
+        echo 'wrong';
+     }
+     
+   } 
+
     public function __construct()
     {
-      $this->middleware('verified',['except' => ['create','store']]);
+      $this->middleware('auth',['except' => ['create','store','addData']]);
     }
 
 }
